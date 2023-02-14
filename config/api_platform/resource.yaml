@@ -1,5 +1,12 @@
-resources:
-  App\Entity\Book:
-    shortName: 'LittleBook'
-    description: 'An REST API for a list of good books'
-    paginationItemsPerPage: 2
+#resources:
+#  App\Entity\Book:
+    #operations:
+    #  ApiPlatform\Metadata\GetCollection:
+    #    method: GET
+    #    groups: ['get_all']
+      #ApiPlatform\Metadata\Get:
+      #  method: GET
+      #  groups: ['get_one']
+
+
+

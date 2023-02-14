@@ -2,41 +2,67 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\BookRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Put(),
+        new Patch(),
+    ],
+    normalizationContext: [
+        'groups' => ['book:read'],
+    ],
+    paginationItemsPerPage: 3
+)]
 class Book
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    #[Groups(['book:read'])]
+    public ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    #[Assert\NotBlank]
+    #[Groups(['book:read'])]
+    public ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description = null;
+    public ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $isbn = null;
+    #[Assert\Isbn]
+    public ?string $isbn = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $numberPages = null;
+    public ?int $numberPages = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $author = null;
+    #[Groups(['book:read'])]
+    public ?string $author = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $opinion = null;
+    public ?string $opinion = null;
 
     #[ORM\Column]
-    private ?bool $lent = null;
+    public ?bool $lent = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $owner = null;
+    public ?string $owner = null;
 
     public function getId(): ?int
     {
