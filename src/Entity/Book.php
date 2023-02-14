@@ -49,6 +49,7 @@ class Book
     public ?string $isbn = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(20)]
     public ?int $numberPages = null;
 
     #[ORM\Column(length: 255)]
